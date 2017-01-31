@@ -110,7 +110,7 @@ This shows the current schema version to be `0` or `Not Installed`. This is expe
 
 We now need to `upgrade` (install) the schema on each database. We do this with the `upgrade` sub-command.
 
-> .\Sitecore.Framework.Publishing.Host.exe schema upgrade --force
+> `.\Sitecore.Framework.Publishing.Host.exe schema upgrade --force`
 
 You should get an output like this:
 
