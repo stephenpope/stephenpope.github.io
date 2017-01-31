@@ -21,7 +21,8 @@ It is assumed that a new/clean version of Sitecore 8.2 Update 2 (rev161221) is i
 
 [sim]: /images/sim.png "SIM installation screenshot"
 
-`**TIP**: Sitecore can be installed quickly and easily using the Sitecore Instance Manager or SIM. More information can be found here: https://github.com/Sitecore/Sitecore-Instance-Manager )`
+Sitecore can be installed quickly and easily using the Sitecore Instance Manager or SIM. | test
+More information can be found here: [Sitecore Instance Manager](https://github.com/Sitecore/Sitecore-Instance-Manager) |
 
 In this example, we have let SIM automatically install our SQL databases for us and they are named as such (Looking in SQL Management Studio):
  
