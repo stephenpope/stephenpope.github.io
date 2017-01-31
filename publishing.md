@@ -96,7 +96,7 @@ This is where we use our second command `schema`.
 
 We need to issue the command:
 
-> .\Sitecore.Framework.Publishing.Host.exe schema list
+> `.\Sitecore.Framework.Publishing.Host.exe schema list`
 
 This will check the schema versions installed to each database. This will also validate that we can connect to the Sitecore databases correctly.
 
@@ -133,7 +133,7 @@ This is useful for diagnosing any errors in these early setup phases.
 
 To start the Publishing Service in `Development Mode` you need to pass the parameter `development` to the `environment` switch.
 
-> .\Sitecore.Framework.Publishing.Host.exe --environment development
+> `.\Sitecore.Framework.Publishing.Host.exe --environment development`
 
 The **Publishing Service** will start up and you should see output like this:
 
@@ -236,7 +236,7 @@ To install into IIS we need to use another command, this time called `iis`.
 
 We need to issue the command:
 
-> .\Sitecore.Framework.Publishing.Host.exe iis install --hosts --force
+> `.\Sitecore.Framework.Publishing.Host.exe iis install --hosts --force`
 
 The `--hosts` switch tells the command to update the hosts automatically file for you.
 
@@ -293,7 +293,7 @@ This quick start guide provides only a very quick example of how to set up the *
 [dashboardcomplete]: /images/dashboardcomplete.png "dashboardcomplete"
 [dashboarddetail]: /images/dashboarddetail.png "dashboarddetail"
 [iisinstall]: /images/iisinstall.png "iisinstall"
-[iismanager]: /images/iismanager "iismanager"
+[iismanager]: /images/iismanager.png "iismanager"
 [installwizard]: /images/installwizard.png "installwizard"
 [installwizard2]: /images/installwizard2.png "installwizard2"
 [launchpad]: /images/launchpad.png "launchpad"
