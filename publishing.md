@@ -26,7 +26,13 @@ In this example, we have let SIM automatically install our SQL databases for us 
  
 ![sql]
 
-For this guide we have extracted the **Publishing Service** to the path: `C:\PublishingService`
+## Publishing Service Installation
+
+If you havent done so already, go ahead and download the `Sitecore Publishing Service 2.0.0 rev. 170130` zip file from the [Sitecore Developer site](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx).
+
+Installation involves simply extracting the zip file to the filesystem. 
+
+**NOTE** : For this guide we have extracted the **Publishing Service** to the path: `C:\PublishingService`
 
 ## Configuring the service
 
@@ -84,6 +90,90 @@ Opening this file in a text editor can confirm that they have been added correct
 
 ## Installation of the schema tables
 
+For the **Publishing Service** to function correctly, we need to install a set of support tables into the SQL databases. We call this the *schema*.
+
+This is where we use our second command `schema`.
+
+We need to issue the command:
+> .\Sitecore.Framework.Publishing.Host.exe schema list
+
+This will check the schema versions installed to each database. This will also validate that we can connect to the Sitecore databases correctly.
+
+You should get an output like this:
+
+![schemazero]
+
+This shows the current schema version to be `0` or `Not Installed`. This is expected as these are clean databases that have not had the **Publishing Service** installed onto them before.
+
+**NOTE**: If you get any errors while running this command you may need to check your connection strings or account permissions.
+
+We now need to `upgrade` (install) the schema on each database. We do this with the `upgrade` sub-command.
+
+> .\Sitecore.Framework.Publishing.Host.exe schema upgrade --force
+
+You should get an output like this:
+
+![schemaupdate]
+
+To validate the installation just run the `schema list` command again.
+
+![schemacheck]
+
+We can now see that the databases are all running schema version *2*, which is needed for v2.0 of the **Publishing Service**.
+
+## Starting the service in 'Development' mode
+
+We are now ready run the **Publishing Service** for the first time.
+
+By default, the **Publishing Service** outputs any messages to a log file (found in the `logs` directory).
+
+For this example, we are going to temporarily run the service in `Development Mode`. This mode will allow us to see Debug (DBG) message output and also everything will be logged to the console as well as the log file.
+This is useful for diagnosing any errors in these early setup phases.
+
+To start the Publishing Service in `Development Mode` you need to pass the parameter `development` to the `environment` switch.
+
+> .\Sitecore.Framework.Publishing.Host.exe --environment development
+
+The **Publishing Service** will start up and you should see output like this:
+
+![servicestartup]
+
+The **Publishing Service** is now running in `development` mode.
+
+This is running directly from the console, you can shut down the service by pressing `Ctrl+C`.
+
+**NOTE**: If you start the service without the `environment` switch then the service will start in `Production` mode which only shows `Information` (INF) level messages and outputs only to the log file.
+
+There is a lot of information being displayed here, this is obviously too much for regular day-to-day usage but helps us diagnose any problems and see what modes and configuration switches have been enabled.
+
+Keep the **Publishing Service** running for now while we install the Sitecore module package.
+
+## Installing the Publishing Service module
+
+The second zip you need to download is `Sitecore Publishing Module 2.0.0 rev. 170130` which is available on the [Sitecore Developer site](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx).
+
+Log into Sitecore as an `Administrator` and locate the `Installation Wizard`.
+
+![installwizard]
+
+.. and install / upload the `Sitecore Publishing Module 2.0.0 rev. 170130` package.
+
+![installwizard2]
+
+Once the installation has completed you should now see new configuration files in the `App_Config/Include` directory.
+
+![appconfig]
+
+We need to edit one of these files. 
+
+Open the one called `Sitecore.Publishing.Service.config` and change the `PublishingServiceUrlRoot` value. This tells Sitecore which URL the Publishing Service is running on.
+
+![urlroot]
+
+Until we install into IIS (later in this guide), the **Publishing Service** will be running on `http://localhost:5000`. This is the default URL and port for the service to try and run on.
+
+## Running our first publish
+
 
 
 [sim]: /images/sim.png "SIM installation screenshot"
@@ -108,6 +198,7 @@ Opening this file in a text editor can confirm that they have been added correct
 [publishlogoutput]: /images/publishlogoutput.png "publishlogoutput"
 [schemaupdate]: /images/schemaupdate.png "schemaupdate"
 [schemazero]: /images/schemazero.png "schemazero"
+[schemacheck]: /images/schemacheck.png "schemacheck"
 [servicestartup]: /images/servicestartup.png "servicestartup"
 [urlroot]: /images/urlroot.png "urlroot"
 [urlrootupdated]: /images/urlrootupdated.png "urlrootupdated"
