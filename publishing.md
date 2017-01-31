@@ -95,6 +95,7 @@ For the **Publishing Service** to function correctly, we need to install a set o
 This is where we use our second command `schema`.
 
 We need to issue the command:
+
 > .\Sitecore.Framework.Publishing.Host.exe schema list
 
 This will check the schema versions installed to each database. This will also validate that we can connect to the Sitecore databases correctly.
@@ -121,7 +122,7 @@ To validate the installation just run the `schema list` command again.
 
 We can now see that the databases are all running schema version *2*, which is needed for v2.0 of the **Publishing Service**.
 
-## Starting the service in 'Development' mode
+# Starting the service in 'Development' mode
 
 We are now ready run the **Publishing Service** for the first time.
 
@@ -148,7 +149,7 @@ There is a lot of information being displayed here, this is obviously too much f
 
 Keep the **Publishing Service** running for now while we install the Sitecore module package.
 
-## Installing the Publishing Service module
+# Installing the Publishing Service Module package
 
 The second zip you need to download is `Sitecore Publishing Module 2.0.0 rev. 170130` which is available on the [Sitecore Developer site](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx).
 
@@ -174,7 +175,111 @@ Until we install into IIS (later in this guide), the **Publishing Service** will
 
 ## Running our first publish
 
+Log into Sitecore as an administrator (as we will be needing elevated permissions for this next step.)
+We now need to open the new `Publishing Dashboard`. This is a SPEAK application that allows us to monitor what’s going on with the **Publishing Service** from inside our Sitecore CM instance.
+We load the dashboard by selecting the newly installed `Publishing` icon from the `LaunchPad`.
 
+![launchpad]
+
+We are going to be publishing all items in repair mode. You can think of this like `republish` in the old publishing system (but much faster!).
+As we are logged in as an administrator we can see the ‘Publish all items’ button at the top left of the dashboard.
+
+Click this and select `Repair mode`.
+
+![dashboard]
+
+We are instructing the **Publishing Service** to publish *every* item in our Sitecore instance.
+
+When the publish runs normally it will compare the source item being published with the corresponding item on the target and skip that item if it sees that no fields have changed. (source is often ‘master’ and target is often ‘web’).
+
+`Repair mode` tells the **Publishing Service** to skip this comparison and publish everything again.
+
+We are using this example as this will display the most output and help you see what the publish is doing in the different stages.
+
+**NOTE**: As this could be an expensive operation and not something that should occur often and not be needed by regular users, it is restricted to Administrator level accounts only.
+Once you click the `Publish` button the publish is queued and you can switch back to your command window.
+
+You will see output similar to this:
+
+![publishcomplete]
+
+There is a lot of information here but what you are seeing is that the publishing job was queued, then accepted and then processed.
+
+The key thing to look for here is that `Complete – OK` message at the end. This means that everything worked correctly.
+
+You can also validate that the publish completed successfully by looking in the `Recent Jobs` panel of the dashboard.
+
+![dashboardcomplete]
+
+You can click on a row and see the details about that publish.
+
+![dashboarddetail]
+
+# Hosting the Publishing Service in IIS
+
+## Prerequisites
+
+To host the **Publishing Service** in IIS you must have installed `Windows Server Hosting (.NET Core)` which can be downloaded from [Microsoft](https://aka.ms/dotnetcore_windowshosting_1_1_0).
+
+This allows the **Publishing Service** process to be correctly hosted in an IIS process and lets IIS manage the lifestyle of the process from IIS Manager.
+
+## Install into IIS
+
+Having the **Publishing Service** run from a command window is great for debugging and development but not ideal for production or day-to-day usage.
+
+Instead, we are going to use IIS to host the **Publishing Service**, this means that when IIS starts it will bring up the **Publishing Service** and manage all connections to it and restart it when necessary.
+
+To install into IIS we need to use another command, this time called `iis`.
+
+**NOTE**: If you haven’t already done this, stop the Publishing Service using Ctrl+C in the command window.
+
+
+We need to issue the command:
+
+> .\Sitecore.Framework.Publishing.Host.exe iis install --hosts --force
+
+The `--hosts` switch tells the command to update the hosts automatically file for you.
+
+This should produce output like this:
+
+![iisinstall]
+
+This shows that the **Publishing Service** has been registered with IIS under the default instance name of `sitecore.publishing`.
+You can confirm this installation in IIS Manager itself.
+
+![iismanager]
+
+We now need to update the `PublishingServiceUrlRoot` setting we ammended earlier in the `App_Config/Include/Sitecore.Publishing.Service.config` file and point it to the new IIS endpoint.
+
+![urlrootupdated]
+
+Once this is done you can restart IIS. This will start the **Publishing Service** instance.
+
+## Validating the IIS installation
+
+The logs for the **Publishing Service** are stored in the `logs` directory. 
+
+**NOTE** : In this example, they will be available in `C:\PublishingService\logs\`. 
+
+![publishlog]
+
+If you open the log in a text editor, you should be able to see that the **Publishing Service** has started again but this time in the default `Production` mode.
+
+![publishlogoutput]
+
+You can also validate the installation by going to one of the REST endpoints such as the `jobs status` controller by opening 
+
+> http://sitecore.publishing/api/publishing/jobs/status 
+
+in your web browser. 
+
+![apicheck]
+
+`Status:0` means that everything is working correctly and the service is running.
+
+# Final Words
+
+This quick start guide provides only a very quick example of how to set up the **Publishing Service**. More in-depth information can be found in the full [Installation and Configuration Guide](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx).. 
 
 [sim]: /images/sim.png "SIM installation screenshot"
 [sql]: /images/sql.png "SQL Management Studio screenshot"
