@@ -1,2 +1,2 @@
-# stephenpope.github.io
-Blogs and notes and stuff.
+# Welcome..
+http://stephenpope.github.io
