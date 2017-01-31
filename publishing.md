@@ -59,9 +59,56 @@ For example:
 
 > .\Sitecore.Framework.Publishing.Host.exe configuration setconnectionstring core 'Data Source=.\SQLEXPRESS;Initial Catalog=sc82rev161221Sitecore_core;Integrated Security=False;User ID=sa;Password=12345;MultipleActiveResultSets=True'
 
-**Note**: It is important that we add `MultipleActiveResltSets=True` to our connections strings so that we can communicate to SQL Server in batches.
-More information can be found in the [Installation and Configuration Guide](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx)). 
+**NOTE**: It is important that we add `MultipleActiveResltSets=True` to our connections strings so that we can communicate to SQL Server in batches.
+More information can be found in the [Installation and Configuration Guide](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx). 
+
+Doing this for each of the three databases should result in output like this:
+
+![coreconfig]
+![masterconfig]
+![webconfig]
+
+## Validate Configuration
+
+These commands will have created a file called `sc.connectionstrings.json` in the `global` folder of the `config` folder found in the root of the **Publishing Service** installation directory (in our example `C:\PublishingService\config`).
+
+![connectionstringxml]
+
+Opening this file in a text editor can confirm that they have been added correctly.
+
+![connectstringoutput]
+
+**TIP**: Any configurations located in the `global` folder are available to *all* environmental configuration types (for example `production` and `development`)
+
+**NOTE** : You can read how the different configuration folders are used in the [Installation and Configuration Guide](https://dev.sitecore.net/Downloads/Sitecore_Publishing_Service/20/Sitecore_Publishing_Service_20_Initial_Release.aspx).
+
+## Installation of the schema tables
+
+
 
 [sim]: /images/sim.png "SIM installation screenshot"
 [sql]: /images/sql.png "SQL Management Studio screenshot"
 [config1]: /images/config1.png "Configuration help"
+[apicheck]: /images/apicheck.png "API Check"
+[appconfig]:/images/appconfig.png "AppConfig"
+[connectionstringxml]: /images/connectionstringxml.png "connectionstringxml"
+[connectstringoutput]: /images/connectstringoutput.png "connectstringoutput"
+[coreconfig]: /images/coreconfig.png "coreconfig"
+[dashboard]: /images/dashboard.png "dashboard"
+[dashboardcomplete]: /images/dashboardcomplete.png "dashboardcomplete"
+[dashboarddetail]: /images/dashboarddetail.png "dashboarddetail"
+[iisinstall]: /images/iisinstall.png "iisinstall"
+[iismanager]: /images/iismanager "iismanager"
+[installwizard]: /images/installwizard.png "installwizard"
+[installwizard2]: /images/installwizard2.png "installwizard2"
+[launchpad]: /images/launchpad.png "launchpad"
+[masterconfig]: /images/masterconfig.png "masterconfig"
+[publishcomplete]: /images/publishcomplete.png "publishcomplete"
+[publishlog]: /images/publishlog.png "publishlog"
+[publishlogoutput]: /images/publishlogoutput.png "publishlogoutput"
+[schemaupdate]: /images/schemaupdate.png "schemaupdate"
+[schemazero]: /images/schemazero.png "schemazero"
+[servicestartup]: /images/servicestartup.png "servicestartup"
+[urlroot]: /images/urlroot.png "urlroot"
+[urlrootupdated]: /images/urlrootupdated.png "urlrootupdated"
+[webconfig]: /images/webconfig.png "webconfig"
