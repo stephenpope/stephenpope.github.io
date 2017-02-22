@@ -1,4 +1,5 @@
-﻿# Setting up SQL Server Linux (Public Preview) on Ubuntu 16.10 on Azure
+﻿
+# Setting up SQL Server Linux (Public Preview) on Ubuntu 16.10 on Azure
 
 ## Goals
 I am excited to see SQL Server finally appear on Linux and I wanted to see if I could get the [Sitecore Publishing Service](http://www.stephenpope.co.uk/publishing) working with the new SQL Server Linux preview. We use some low level SQL calls so I figured it would be a good test of the new version.
